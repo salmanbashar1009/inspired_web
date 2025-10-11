@@ -19,12 +19,25 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '20'
-          cache: 'npm'
+          node-version: '20.19.5' # Matches your specified Node.js version
+          cache: 'npm' # Cache npm dependencies
+          cache-dependency-path: '**/package-lock.json' # Ensure caching uses package-lock.json
 
-      # Install dependencies
+      # Verify npm version
+      - name: Verify npm version
+        run: npm --version # Should output 10.8.2
+
+      # Install dependencies (generate package-lock.json if missing)
       - name: Install dependencies
-        run: npm ci
+        run: |
+          if [ ! -f package-lock.json ]; then
+            npm install --package-lock-only
+            npm ci
+          else
+            npm ci
+          fi
+        env:
+          NPM_CONFIG_CACHE: /home/runner/.npm # Matches the cache path from error
 
       # Build the project
       - name: Build

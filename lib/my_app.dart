@@ -8,6 +8,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: "Inspired Events & Tours",
       debugShowCheckedModeBanner: false,
+      themeMode: ThemeMode.light,
     );
   }
 }
