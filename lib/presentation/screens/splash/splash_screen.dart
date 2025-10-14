@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:inspired_web/core/constants/app_colors.dart';
 import 'package:inspired_web/core/route_config/route_names.dart';
 
 import '../../../core/constants/app_images.dart';
@@ -19,7 +18,7 @@ class _SplashScreenState extends State<SplashScreen> {
       if (mounted) {
         Navigator.pushNamedAndRemoveUntil(
           context,
-          RouteNames.splashScreen,
+          RouteNames.parentScreen,
           (route) => false,
         );
       }

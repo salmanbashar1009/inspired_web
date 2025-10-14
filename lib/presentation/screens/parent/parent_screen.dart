@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:inspired_web/presentation/screens/home/home_screen.dart';
 
 import 'package:inspired_web/presentation/screens/parent/widgets/app_header.dart';
 
@@ -12,7 +13,7 @@ class ParentScreen extends StatelessWidget {
         child: Column(
           children: [
             const AppHeader(),
-            Expanded(child: Container(color: Colors.amber,)),
+            Expanded(child: HomeScreen()),
           ],
         ),
       ),
