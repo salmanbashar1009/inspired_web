@@ -12,13 +12,16 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
-
   @override
   void initState() {
     super.initState();
     Future.delayed(const Duration(seconds: 2)).then((value) {
-      if(mounted){
-        Navigator.pushNamedAndRemoveUntil(context, RouteNames.homeScreen, (route) => false);
+      if (mounted) {
+        Navigator.pushNamedAndRemoveUntil(
+          context,
+          RouteNames.splashScreen,
+          (route) => false,
+        );
       }
     });
   }
@@ -28,7 +31,7 @@ class _SplashScreenState extends State<SplashScreen> {
     return Scaffold(
       body: SafeArea(
         child: Center(
-          child:  Image.asset(AppImages.appLogo,fit: BoxFit.contain,)
+          child: Image.asset(AppImages.appLogo, fit: BoxFit.contain),
         ),
       ),
     );
