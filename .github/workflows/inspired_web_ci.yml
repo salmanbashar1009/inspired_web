@@ -11,21 +11,30 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # Checkout the repository code
+      # 🛠️ 1. Checkout your repository
       - name: Checkout code
         uses: actions/checkout@v4
 
-      # Build the project
-      - name: Build
-        run: npm run build
-        env:
-          NODE_ENV: production
+      # 🧰 2. Setup Flutter
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.24.0'  # 👈 Use your Flutter version
+          channel: 'stable'
 
-      # Deploy to GitHub Pages
+      # 📦 3. Get dependencies
+      - name: Install dependencies
+        run: flutter pub get
+
+      # 🧱 4. Build Flutter Web
+      - name: Build Flutter Web
+        run: flutter build web --release --base-href="/${{ github.event.repository.name }}/"
+
+      # 🚀 5. Deploy to GitHub Pages
       - name: Deploy to GitHub Pages
         if: github.event_name == 'push' && github.ref == 'refs/heads/main'
         uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./dist
+          publish_dir: ./build/web  # 👈 Flutter Web build output directory
           force_orphan: true
