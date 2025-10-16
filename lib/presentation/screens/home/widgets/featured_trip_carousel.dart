@@ -31,45 +31,9 @@ class FeaturedTripCarousel extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Container(
-                      height: 250,
-                      width: 350, // Give each item a fixed width
-                      decoration: BoxDecoration(
-                        image: DecorationImage(
-                          image: NetworkImage(AppImages.nextTripImage),
-                          fit: BoxFit.fill,
-                        ),
-                      ),
-                      child: Utils.priceTag(context: context, price: "\$2189"),
-                    ),
+                    buildCarImage(context),
                     const SizedBox(height: 16),
-                    SizedBox(
-                      width: 350,
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 12),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              "NC500 Motorcycle Trip",
-                              style: Theme.of(context).textTheme.titleMedium,
-                            ),
-                            const SizedBox(height: 8),
-                            Text(
-                              '''Due to the nature of much of the roads along the NC500 we limit this trip to 30 bikes to minimize congestion etc''',
-                              style: Theme.of(context).textTheme.bodyLarge,
-                              maxLines: 3,
-                              softWrap: true,
-                              overflow: TextOverflow.ellipsis,
-                            ),
-                            const SizedBox(height: 16,),
-                            Align(
-                                alignment: Alignment.center,
-                                child: Utils.primaryButton(context: context, text: "View Details", onTap: (){},width: double.infinity))
-                          ],
-                        ),
-                      ),
-                    )
+                    buildCardDetails(context),
                   ],
                 ),
               );
@@ -82,6 +46,56 @@ class FeaturedTripCarousel extends StatelessWidget {
           icon: Icon(Icons.arrow_back_ios_new, size: 30),
         ),
       ],
+    );
+  }
+
+  Widget buildCardDetails(BuildContext context) {
+    return SizedBox(
+      width: 350,
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 12),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              "NC500 Motorcycle Trip",
+              style: Theme.of(context).textTheme.titleMedium,
+            ),
+            const SizedBox(height: 8),
+            Text(
+              '''Due to the nature of much of the roads along the NC500 we limit this trip to 30 bikes to minimize congestion etc''',
+              style: Theme.of(context).textTheme.bodyLarge,
+              maxLines: 3,
+              softWrap: true,
+              overflow: TextOverflow.ellipsis,
+            ),
+            const SizedBox(height: 16),
+            Align(
+              alignment: Alignment.center,
+              child: Utils.primaryButton(
+                context: context,
+                text: "View Details",
+                onTap: () {},
+                width: double.infinity,
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget buildCarImage(BuildContext context) {
+    return Container(
+      height: 250,
+      width: 350, // Give each item a fixed width
+      decoration: BoxDecoration(
+        image: DecorationImage(
+          image: NetworkImage(AppImages.nextTripImage),
+          fit: BoxFit.fill,
+        ),
+      ),
+      child: Utils.priceTag(context: context, price: "\$2189"),
     );
   }
 }
