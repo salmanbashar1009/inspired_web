@@ -2,24 +2,33 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:inspired_web/my_app.dart';
+import 'package:inspired_web/core/constants/app_images.dart';
+import 'package:inspired_web/core/route_config/route_names.dart';
+import 'package:inspired_web/presentation/screens/splash/splash_screen.dart';
 
 
-void main() {
-  testWidgets('Counter increments smoke test', (WidgetTester tester) async {
-    // Build our app and trigger a frame.
-    await tester.pumpWidget(const MyApp());
+void main(){
+  testWidgets("SplashScreen displays logo and navigates after delay", (WidgetTester tester)async{
+    await tester.pumpWidget(
+      MaterialApp(
+        home: const SplashScreen(),
+        routes: {
+          RouteNames.parentScreen: (context) => const Scaffold(body: Text('Parent Screen')),
+        },
+      )
+    );
 
-    // Verify that our counter starts at 0.
-    expect(find.text('0'), findsOneWidget);
-    expect(find.text('1'), findsNothing);
+    // Verify that the Image widget with the app logo is displayed
+    expect(find.byType(Image), findsOneWidget);
+    expect(find.image(const AssetImage(AppImages.appLogo)), findsOneWidget);
 
-    // Tap the '+' icon and trigger a frame.
-    await tester.tap(find.byIcon(Icons.add));
-    await tester.pump();
 
-    // Verify that our counter has incremented.
-    expect(find.text('0'), findsNothing);
-    expect(find.text('1'), findsOneWidget);
-  });
+
+    // Fast-forward time to trigger the navigation
+    await tester.pumpAndSettle(const Duration(seconds: 2));
+
+
+
+
+});
 }

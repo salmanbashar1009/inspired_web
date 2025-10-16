@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:inspired_web/core/utils/utils.dart';
-
-import '../../../../core/constants/app_colors.dart';
 import '../../../../core/constants/app_images.dart';
 import '../../../../core/constants/app_strings.dart';
 
