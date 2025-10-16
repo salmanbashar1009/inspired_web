@@ -15,13 +15,6 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      # Set up Node.js environment
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: '20.19.5' # Matches your specified Node.js version
-          cache: 'npm' # Cache npm dependencies
-          cache-dependency-path: '**/package-lock.json' # Ensure caching uses package-lock.json
 
       # Verify npm version
       - name: Verify npm version
