@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:inspired_web/core/utils/utils.dart';
 
 import '../../../../core/constants/app_colors.dart';
 import '../../../../core/constants/app_images.dart';
@@ -11,6 +12,7 @@ class AppHeader extends StatelessWidget {
   Widget build(BuildContext context) {
     return AppBar(
       toolbarHeight: 100,
+      surfaceTintColor: Colors.transparent,
       title: Row(
         children: [
           Image.asset(AppImages.appTextLogo,fit: BoxFit.contain,height: 75,width: 230,),
@@ -27,20 +29,7 @@ class AppHeader extends StatelessWidget {
             }),
           ),
           const SizedBox(width: 24,),
-          Container(
-            padding: const EdgeInsets.symmetric(horizontal: 24,vertical: 10),
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(99),
-              gradient: LinearGradient(colors: [
-                AppColors.gradientStartColor,
-                AppColors.gradientEndColor
-              ]),
-            ),
-            child: Text(AppStrings.contactUs,style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                fontWeight: FontWeight.w600,
-                color: AppColors.secondaryTextColor
-            ),),
-          ),
+          Utils.primaryButton(context: context, text: AppStrings.contactUs, onTap: (){}),
           const SizedBox(width: 40,),
         ],
       ),

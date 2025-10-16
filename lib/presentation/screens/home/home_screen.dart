@@ -1,8 +1,12 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:inspired_web/core/constants/app_strings.dart';
+import 'package:inspired_web/presentation/screens/home/widgets/featured_trip_carousel.dart';
 import 'package:inspired_web/presentation/screens/home/widgets/next_trip_container.dart';
 import 'package:inspired_web/presentation/shared_widgets/banner_section.dart';
+import 'package:inspired_web/presentation/shared_widgets/headline_section.dart';
 import '../../../core/constants/app_colors.dart';
 import '../../../core/constants/app_images.dart';
 
@@ -13,9 +17,9 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 40),
-          child: SingleChildScrollView(
+        child: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 40),
             child: Column(
               children: [
                 Stack(
@@ -44,6 +48,13 @@ class HomeScreen extends StatelessWidget {
                     ),
                   ],
                 ),
+                const SizedBox(height: 60,),
+                HeadlineSection(text: AppStrings.featuredTrips),
+                const SizedBox(height: 30,),
+                SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
+                    child: FeaturedTripCarousel()),
+                const SizedBox(height: 60,),
               ],
             ),
           ),
@@ -52,4 +63,5 @@ class HomeScreen extends StatelessWidget {
     );
   }
 }
+
 
