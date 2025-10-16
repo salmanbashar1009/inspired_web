@@ -15,23 +15,6 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-
-      # Verify npm version
-      - name: Verify npm version
-        run: npm --version # Should output 10.8.2
-
-      # Install dependencies (generate package-lock.json if missing)
-      - name: Install dependencies
-        run: |
-          if [ ! -f package-lock.json ]; then
-            npm install --package-lock-only
-            npm ci
-          else
-            npm ci
-          fi
-        env:
-          NPM_CONFIG_CACHE: /home/runner/.npm # Matches the cache path from error
-
       # Build the project
       - name: Build
         run: npm run build
