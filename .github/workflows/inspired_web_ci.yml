@@ -1,40 +1,37 @@
-name: Inspired Web CI/CD
-
-on:
-  push:
-    branches: ['main']
-  pull_request:
-    branches: ['main']
-
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
 
     steps:
-      # 🛠️ 1. Checkout your repository
+      # 1. Checkout code
       - name: Checkout code
         uses: actions/checkout@v4
 
-      # 🧰 2. Setup Flutter
+      # 2. Setup Dart 3.9.0
+      - uses: dart-lang/setup-dart@v1
+        with:
+          sdk: '3.9.0'
+
+      # 3. Setup Flutter
       - name: Setup Flutter
         uses: subosito/flutter-action@v2
         with:
-          flutter-version: '3.24.0'  # 👈 Use your Flutter version
+          flutter-version: '3.24.0'
           channel: 'stable'
 
-      # 📦 3. Get dependencies
+      # 4. Get dependencies
       - name: Install dependencies
         run: flutter pub get
 
-      # 🧱 4. Build Flutter Web
+      # 5. Build Flutter Web
       - name: Build Flutter Web
         run: flutter build web --release --base-href="/${{ github.event.repository.name }}/"
 
-      # 🚀 5. Deploy to GitHub Pages
+      # 6. Deploy to GitHub Pages
       - name: Deploy to GitHub Pages
         if: github.event_name == 'push' && github.ref == 'refs/heads/main'
         uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./build/web  # 👈 Flutter Web build output directory
+          publish_dir: ./build/web
           force_orphan: true
