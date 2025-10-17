@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:inspired_web/core/constants/app_images.dart';
 import 'package:inspired_web/data/models/trip_model.dart';
+import 'package:inspired_web/presentation/providers/featured_carousel_controller_notifier.dart';
 import '../../../../core/utils/utils.dart';
 
 class FeaturedTripCarousel extends StatelessWidget {
@@ -10,46 +12,66 @@ class FeaturedTripCarousel extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        IconButton(
-          onPressed: () {},
-          icon: Icon(Icons.arrow_forward_ios, size: 30),
-        ),
-        const SizedBox(width: 24),
-        SizedBox(
-          width: 1098,
-          height: 500, // Constrain the height of the ListView
-          child: ListView.builder(
-            scrollDirection:
-                Axis.horizontal, // Set scroll direction to horizontal
-            itemCount: trips.length,
-            itemBuilder: (context, index) {
-              return Card(
-                margin: const EdgeInsets.only(right: 24),
-                shape: const RoundedRectangleBorder(
-                  borderRadius: BorderRadius.zero,
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    buildCarImage(context: context, trips: trips,index: index),
-                    const SizedBox(height: 16),
-                    buildCardDetails(context: context,trips: trips,index: index ),
-                  ],
-                ),
-              );
+    return Consumer(builder: (context, ref, child){
+      final scrollController = ref.watch(featuredCarouselControllerProvider);
+      return Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          IconButton(
+            onPressed: () {
+              if(scrollController.hasClients){
+                scrollController.animateTo(
+                  scrollController.offset - 374,
+                  duration: const Duration(milliseconds: 600),
+                  curve: Curves.easeInOut,
+                );
+              }
             },
+            icon: Icon(Icons.arrow_back_ios_new_outlined, size: 30),
           ),
-        ),
-        const SizedBox(width: 24),
-        IconButton(
-          onPressed: () {},
-          icon: Icon(Icons.arrow_back_ios_new, size: 30),
-        ),
-      ],
-    );
+          const SizedBox(width: 24),
+          SizedBox(
+            width: 1098,
+            height: 500, // Constrain the height of the ListView
+            child: ListView.builder(
+              scrollDirection:
+              Axis.horizontal, // Set scroll direction to horizontal
+              controller: scrollController,
+              itemCount: trips.length,
+              itemBuilder: (context, index) {
+                return Card(
+                  margin: const EdgeInsets.only(right: 24),
+                  shape: const RoundedRectangleBorder(
+                    borderRadius: BorderRadius.zero,
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      buildCarImage(context: context, trips: trips,index: index),
+                      const SizedBox(height: 16),
+                      buildCardDetails(context: context,trips: trips,index: index ),
+                    ],
+                  ),
+                );
+              },
+            ),
+          ),
+          const SizedBox(width: 24),
+          IconButton(
+            onPressed: () {
+              if (scrollController.hasClients) {
+                scrollController.animateTo(
+                  scrollController.offset + 374,
+                  duration: const Duration(milliseconds: 600),
+                  curve: Curves.easeInOut,
+                );
+              }
+            },
+            icon: Icon(Icons.arrow_forward_ios_outlined, size: 30),
+          ),
+        ],
+      );
+    });
   }
 
   Widget buildCardDetails({required BuildContext context, required List<TripModel> trips, required int index}) {
