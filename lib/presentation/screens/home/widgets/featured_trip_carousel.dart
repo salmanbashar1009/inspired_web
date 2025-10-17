@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:inspired_web/core/constants/app_images.dart';
+import 'package:inspired_web/data/models/trip_model.dart';
 import '../../../../core/utils/utils.dart';
 
 class FeaturedTripCarousel extends StatelessWidget {
-  const FeaturedTripCarousel({super.key});
+  const FeaturedTripCarousel({super.key, required this.trips, });
+
+  final List<TripModel> trips ;
 
   @override
   Widget build(BuildContext context) {
@@ -17,11 +20,11 @@ class FeaturedTripCarousel extends StatelessWidget {
         const SizedBox(width: 24),
         SizedBox(
           width: 1098,
-          height: 465, // Constrain the height of the ListView
+          height: 500, // Constrain the height of the ListView
           child: ListView.builder(
             scrollDirection:
                 Axis.horizontal, // Set scroll direction to horizontal
-            itemCount: 10,
+            itemCount: trips.length,
             itemBuilder: (context, index) {
               return Card(
                 margin: const EdgeInsets.only(right: 24),
@@ -31,9 +34,9 @@ class FeaturedTripCarousel extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    buildCarImage(context),
+                    buildCarImage(context: context, trips: trips,index: index),
                     const SizedBox(height: 16),
-                    buildCardDetails(context),
+                    buildCardDetails(context: context,trips: trips,index: index ),
                   ],
                 ),
               );
@@ -49,7 +52,7 @@ class FeaturedTripCarousel extends StatelessWidget {
     );
   }
 
-  Widget buildCardDetails(BuildContext context) {
+  Widget buildCardDetails({required BuildContext context, required List<TripModel> trips, required int index}) {
     return SizedBox(
       width: 350,
       child: Padding(
@@ -58,12 +61,12 @@ class FeaturedTripCarousel extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              "NC500 Motorcycle Trip",
+              trips[index].title,
               style: Theme.of(context).textTheme.titleMedium,
             ),
             const SizedBox(height: 8),
             Text(
-              '''Due to the nature of much of the roads along the NC500 we limit this trip to 30 bikes to minimize congestion etc''',
+              trips[index].description ?? '',
               style: Theme.of(context).textTheme.bodyLarge,
               maxLines: 3,
               softWrap: true,
@@ -85,7 +88,7 @@ class FeaturedTripCarousel extends StatelessWidget {
     );
   }
 
-  Widget buildCarImage(BuildContext context) {
+  Widget buildCarImage({required BuildContext context, required List<TripModel> trips, required int index}) {
     return Container(
       height: 250,
       width: 350, // Give each item a fixed width
@@ -95,7 +98,7 @@ class FeaturedTripCarousel extends StatelessWidget {
           fit: BoxFit.fill,
         ),
       ),
-      child: Utils.priceTag(context: context, price: "\$2189"),
+      child: Utils.priceTag(context: context, price: trips[index].price ?? ''),
     );
   }
 }

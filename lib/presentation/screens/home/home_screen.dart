@@ -1,8 +1,10 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:inspired_web/core/constants/app_strings.dart';
+import 'package:inspired_web/presentation/providers/trip_provider.dart';
 import 'package:inspired_web/presentation/screens/home/widgets/featured_trip_carousel.dart';
 import 'package:inspired_web/presentation/screens/home/widgets/next_trip_container.dart';
 import 'package:inspired_web/presentation/shared_widgets/banner_section.dart';
@@ -31,13 +33,20 @@ class HomeScreen extends StatelessWidget {
                       left: (MediaQuery.of(context).size.width - 950) / 2,
                       child: Container(
                         color: AppColors.primaryColor,
-                        padding: const EdgeInsets.symmetric(horizontal: 16,vertical: 8),
-                        child: Text(AppStrings.ourNextTrips,style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                          fontSize: 24,
-                          fontWeight: FontWeight.w600,
-                          fontFamily: GoogleFonts.arimo().fontFamily,
-                          color: AppColors.secondaryTextColor
-                        ),),
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 16,
+                          vertical: 8,
+                        ),
+                        child: Text(
+                          AppStrings.ourNextTrips,
+                          style: Theme.of(context).textTheme.titleMedium
+                              ?.copyWith(
+                                fontSize: 24,
+                                fontWeight: FontWeight.w600,
+                                fontFamily: GoogleFonts.arimo().fontFamily,
+                                color: AppColors.secondaryTextColor,
+                              ),
+                        ),
                       ),
                     ),
                     Positioned(
@@ -48,13 +57,25 @@ class HomeScreen extends StatelessWidget {
                     ),
                   ],
                 ),
-                const SizedBox(height: 60,),
+                const SizedBox(height: 60),
                 HeadlineSection(text: AppStrings.featuredTrips),
-                const SizedBox(height: 30,),
+                const SizedBox(height: 30),
                 SingleChildScrollView(
-                    scrollDirection: Axis.horizontal,
-                    child: FeaturedTripCarousel()),
-                const SizedBox(height: 60,),
+                  scrollDirection: Axis.horizontal,
+                  child: Consumer(
+                    builder: (context,ref,child){
+                      final tripAsync = ref.watch(allTripsProvider);
+                      return tripAsync.when(
+                          data: (trips){
+                            return FeaturedTripCarousel(trips: trips);
+                          },
+                          loading: ()=> const Center(child: CircularProgressIndicator(),),
+                        error: (error,stackTrace)=> Text('Error loading data: $error')
+                      );
+                    },
+                  ),
+                ),
+                const SizedBox(height: 60),
               ],
             ),
           ),
@@ -63,5 +84,3 @@ class HomeScreen extends StatelessWidget {
     );
   }
 }
-
-
