@@ -40,6 +40,7 @@ class FeaturedTripCarousel extends StatelessWidget {
               itemCount: trips.length,
               itemBuilder: (context, index) {
                 return Card(
+                  elevation: 4,
                   margin: const EdgeInsets.only(right: 24),
                   shape: const RoundedRectangleBorder(
                     borderRadius: BorderRadius.zero,
@@ -77,6 +78,7 @@ class FeaturedTripCarousel extends StatelessWidget {
   Widget buildCardDetails({required BuildContext context, required List<TripModel> trips, required int index}) {
     return SizedBox(
       width: 350,
+      height: 230,
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 12),
         child: Column(
@@ -94,7 +96,7 @@ class FeaturedTripCarousel extends StatelessWidget {
               softWrap: true,
               overflow: TextOverflow.ellipsis,
             ),
-            const SizedBox(height: 16),
+            const Spacer(),
             Align(
               alignment: Alignment.center,
               child: Utils.primaryButton(
@@ -104,6 +106,7 @@ class FeaturedTripCarousel extends StatelessWidget {
                 width: double.infinity,
               ),
             ),
+            const SizedBox(height: 20,)
           ],
         ),
       ),
