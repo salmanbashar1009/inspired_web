@@ -5,13 +5,13 @@ class Urls{
   static const String createTrip = "$baseURL?action=add";
   static const String updateTrip = "$baseURL?action=update";
   static const String deleteTrip = "$baseURL?action=delete";
-  static  String getSingleTrip(String id) => "$baseURL?action=read&id=$id";
+  static  String getSingleTrip = "$baseURL?action=read&id=";
 
   /// Next trip data will be fetched from this url
   static const String nextTripBaseURL = "https://script.google.com/macros/s/AKfycbxEKW35WiSUCPAHlDAzcRK6HuaoW04AxP3ijKmT9wAGg9fW99-Z6YM_jj-5jcQcJYZmBA/exec";
   static const String getAllNextTrip = "$nextTripBaseURL?action=readAll";
   static const String updateNextTrip = "$nextTripBaseURL?action=update";
-  static  String getSingleNextTrip(String id) => "$nextTripBaseURL?action=read&id=$id";
+  static  String getSingleNextTrip = "$nextTripBaseURL?action=read&id=";
 
 
 

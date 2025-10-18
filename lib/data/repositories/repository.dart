@@ -14,4 +14,12 @@ Future<List<TripModel>> getAllTrips()async{
   }
 }
 
+Future<TripModel> getSingleTrip({required String id})async{
+  try{
+    return await _dataSource.getSingleTrip(id: id);
+  }catch(e){
+    throw Exception("Failed to fetch single trip");
+  }
+}
+
 }

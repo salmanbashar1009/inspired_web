@@ -20,3 +20,8 @@ final allTripsProvider = FutureProvider<List<TripModel>>((ref){
   final repositoryProvider = ref.watch(tripRepositoryProvider);
   return repositoryProvider.getAllTrips();
 });
+
+final singleTripProvider = FutureProvider.family<TripModel,String>((ref,id){
+  final repositoryProvider = ref.watch(tripRepositoryProvider);
+  return repositoryProvider.getSingleTrip(id: id);
+});
