@@ -6,6 +6,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:inspired_web/core/constants/app_strings.dart';
 import 'package:inspired_web/presentation/providers/trip_provider.dart';
 import 'package:inspired_web/presentation/screens/home/widgets/featured_trip_carousel.dart';
+import 'package:inspired_web/presentation/screens/home/widgets/home_banner.dart';
 import 'package:inspired_web/presentation/screens/home/widgets/next_trip_container.dart';
 import 'package:inspired_web/presentation/shared_widgets/banner_section.dart';
 import 'package:inspired_web/presentation/shared_widgets/headline_section.dart';
@@ -24,41 +25,9 @@ class HomeScreen extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 40),
             child: Column(
               children: [
-                Stack(
-                  children: [
-                    const SizedBox(height: 600),
-                    BannerSection(imageUrl: AppImages.hombeBanner),
-                    Positioned(
-                      bottom: 200,
-                      left: (MediaQuery.of(context).size.width - 950) / 2,
-                      child: Container(
-                        color: AppColors.primaryColor,
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 16,
-                          vertical: 8,
-                        ),
-                        child: Text(
-                          AppStrings.ourNextTrips,
-                          style: Theme.of(context).textTheme.titleMedium
-                              ?.copyWith(
-                                fontSize: 24,
-                                fontWeight: FontWeight.w600,
-                                fontFamily: GoogleFonts.arimo().fontFamily,
-                                color: AppColors.secondaryTextColor,
-                              ),
-                        ),
-                      ),
-                    ),
-                    Positioned(
-                      bottom: 0,
-                      left: (MediaQuery.of(context).size.width - 1000) / 2,
-                      right: (MediaQuery.of(context).size.width - 1000) / 2,
-                      child: NextTripContainer(),
-                    ),
-                  ],
-                ),
+                HomeBanner(),
                 const SizedBox(height: 60),
-                HeadlineSection(text: AppStrings.featuredTrips),
+               const  HeadlineSection(text: AppStrings.featuredTrips),
                 const SizedBox(height: 30),
                 SingleChildScrollView(
                   scrollDirection: Axis.horizontal,
@@ -76,6 +45,62 @@ class HomeScreen extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: 60),
+                const  HeadlineSection(text: AppStrings.exploreAllBikeTrips),
+                const SizedBox(height: 30),
+                SizedBox(
+                  width: 1090,
+                  child: Wrap(
+                    spacing: 20,
+                    runSpacing: 20,
+                    children: List.generate(5, (index){
+                      return Container(
+                        alignment: Alignment.center,
+                        width: 350,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(16),
+                          color: Colors.yellow,
+                          image: DecorationImage(image: NetworkImage(AppImages.nextTripImage),
+                          onError: (_,__){
+                             Icon(Icons.image);
+                          },
+                          fit: BoxFit.fill),
+                        ),
+                        child: Container(
+                          alignment: Alignment.center,
+                            width: 350,
+                            height: 250,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(16),
+                              color: AppColors.onBackgroundColor.withAlpha(100)
+                            ),
+                            child: Text("NC500 Motorcycle Road Trip", style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                              color: AppColors.secondaryTextColor
+                            ),)),
+                      );
+                    }),
+                  ),
+                ),
+                // GridView.builder(
+                //     gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                //         crossAxisCount: 3,
+                //       mainAxisSpacing: 20,
+                //       crossAxisSpacing: 20,
+                //       childAspectRatio: 16/9
+                //     ),
+                //     itemCount: 5,
+                //     itemBuilder: (context,index){
+                //       return Container(
+                //         decoration: BoxDecoration(
+                //           borderRadius: BorderRadius.circular(10),
+                //           color: Colors.yellow
+                //         ),
+                //         child: Text('Bike Trip'),
+                //       );
+                //     }
+                // ),
+                const SizedBox(height: 60),
+                const  HeadlineSection(text: AppStrings.exploreAllCarTrips),
+                const SizedBox(height: 30),
               ],
             ),
           ),
@@ -84,3 +109,4 @@ class HomeScreen extends StatelessWidget {
     );
   }
 }
+
