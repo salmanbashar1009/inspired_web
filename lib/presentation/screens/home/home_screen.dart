@@ -1,14 +1,10 @@
-import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:inspired_web/core/constants/app_strings.dart';
 import 'package:inspired_web/presentation/providers/trip_provider.dart';
 import 'package:inspired_web/presentation/screens/home/widgets/featured_trip_carousel.dart';
 import 'package:inspired_web/presentation/screens/home/widgets/home_banner.dart';
-import 'package:inspired_web/presentation/screens/home/widgets/next_trip_container.dart';
-import 'package:inspired_web/presentation/shared_widgets/banner_section.dart';
 import 'package:inspired_web/presentation/shared_widgets/headline_section.dart';
 import '../../../core/constants/app_colors.dart';
 import '../../../core/constants/app_images.dart';
